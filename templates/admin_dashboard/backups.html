@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Backups - Job Portal{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Database Backups</h1>
+    
+    <a href="#" class="btn btn-success mb-4">Create Backup</a>
+    
+    {% if backups %}
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Backup File</th>
+                    <th>Created Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for backup in backups %}
+                <tr>
+                    <td>{{ backup }}</td>
+                    <td>N/A</td>
+                    <td>
+                        <a href="#" class="btn btn-sm btn-info">Download</a>
+                        <a href="#" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-info">No backups available.</div>
+    {% endif %}
+</div>
+{% endblock %}

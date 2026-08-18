@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Notifications - Job Portal{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Notifications</h1>
+    
+    {% if notifications %}
+    <div class="list-group">
+        {% for notif in notifications %}
+        <div class="list-group-item">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">{{ notif.title }}</h5>
+                <small>{{ notif.created_at|date:"M d, Y" }}</small>
+            </div>
+            <p class="mb-1">{{ notif.message }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-info">No notifications yet.</div>
+    {% endif %}
+</div>
+{% endblock %}

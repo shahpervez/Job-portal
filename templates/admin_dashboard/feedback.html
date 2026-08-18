@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}User Feedback - Job Portal{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">User Feedback</h1>
+    
+    {% if feedbacks %}
+    <div class="row">
+        {% for feedback in feedbacks %}
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ feedback.user.username }}</h5>
+                    <p class="card-text">{{ feedback.message }}</p>
+                    <small class="text-muted">{{ feedback.created_at|date:"M d, Y g:i A" }}</small>
+                    <hr>
+                    <a href="#" class="btn btn-sm btn-primary">Respond</a>
+                    <a href="#" class="btn btn-sm btn-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-info">No feedback received yet.</div>
+    {% endif %}
+</div>
+{% endblock %}

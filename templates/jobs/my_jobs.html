@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}My Jobs - Job Portal{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">My Job Postings</h1>
+    
+    <a href="{% url 'post_job' %}" class="btn btn-primary mb-4">Post New Job</a>
+    
+    {% if jobs %}
+    <div class="row">
+        {% for job in jobs %}
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ job.title }}</h5>
+                    <p class="card-text">{{ job.location }} | {{ job.get_job_type_display }}</p>
+                    <p class="text-muted">Posted: {{ job.created_at|date:"M d, Y" }}</p>
+                    <a href="{% url 'job_detail' job.id %}" class="btn btn-sm btn-info">View</a>
+                    <a href="#" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="#" class="btn btn-sm btn-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-info">You haven't posted any jobs yet.</div>
+    {% endif %}
+</div>
+{% endblock %}

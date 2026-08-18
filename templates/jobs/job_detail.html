@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}{{ job.title }} - Job Portal{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h2>{{ job.title }}</h2>
+                    <p class="text-muted">
+                        <strong>{{ job.company }}</strong> | 
+                        <i class="fas fa-map-marker-alt"></i> {{ job.location }}
+                    </p>
+                    
+                    <hr>
+                    
+                    <h4>Job Description</h4>
+                    <p>{{ job.description|linebreaks }}</p>
+                    
+                    <h4>Requirements</h4>
+                    <p>{{ job.requirements|linebreaks }}</p>
+                    
+                    <h4>Job Details</h4>
+                    <ul>
+                        <li><strong>Job Type:</strong> {{ job.get_job_type_display }}</li>
+                        <li><strong>Experience Required:</strong> {{ job.experience_required }} years</li>
+                        <li><strong>Salary:</strong> {{ job.salary_min|default:"Not specified" }} - {{ job.salary_max|default:"" }}</li>
+                        <li><strong>Posted:</strong> {{ job.created_at|date:"M d, Y" }}</li>
+                    </ul>
+                    
+                    <hr>
+                    
+                    {% if user.is_authenticated and user.user_type == "student" %}
+                    <form method="POST" action="{% url 'apply_job' job.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-success btn-lg w-100">Apply Now</button>
+                    </form>
+                    {% elif user.is_authenticated %}
+                    <p class="alert alert-info">Only students can apply for jobs.</p>
+                    {% else %}
+                    <p class="alert alert-info"><a href="{% url 'login' %}">Login</a> to apply for this job.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Company Information</h5>
+                    <p><strong>{{ job.company }}</strong></p>
+                    <hr>
+                    <a href="#" class="btn btn-primary w-100 mb-2">Save Job</a>
+                    <a href="{% url 'job_list' %}" class="btn btn-secondary w-100">Back to Jobs</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
